@@ -1,0 +1,5 @@
+# Installation
+
+- shop:install
+
+# Deploy
