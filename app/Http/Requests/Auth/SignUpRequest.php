@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace {{ namespace }};
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class {{ class }} extends FormRequest
+class SignUpRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,7 +16,9 @@ class {{ class }} extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email:dns'],
+            'password' => ['required', 'string', 'confirmed']
         ];
     }
 }
