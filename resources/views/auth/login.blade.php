@@ -3,7 +3,7 @@
 @section('title', 'Вход в аккаунт')
 
 @section('content')
-    <x-forms.auth-forms title='Вход в аккаунт' action=''>
+    <x-forms.auth-forms title='Вход в аккаунт' action="{{ route('auth.login.handle') }}" method="POST">
         @csrf
 
         <x-forms.text-input type='email' name='email' value="{{ old('email') }}" :isError="$errors->has('email')" placeholder='Email'

@@ -17,6 +17,7 @@ Route::name('auth.')->group(function () {
 
     Route::controller(LoginController::class)->prefix('login')->group(function () {
         Route::get('/', 'renderPage')->name('login');
+        Route::post('/handle', 'handle')->name('login.handle');
     });
 
     Route::controller(ForgotPasswordController::class)->prefix('forgot-password')->group(function () {
