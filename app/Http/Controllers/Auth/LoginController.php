@@ -23,7 +23,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($params)) {
             $request->session()->regenerate();
-            return to_route('home');
+            return redirect()->intended(route('home'));
         }
 
         return back()

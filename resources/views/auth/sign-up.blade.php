@@ -3,7 +3,7 @@
 @section('title', 'Регистрация')
 
 @section('content')
-    <x-forms.auth-forms title='Регистрация' action="{{ route('auth.signUp.handle') }}" method="POST">
+    <x-forms.auth-forms title='Регистрация' action="{{ route('signUp.handle') }}" method="POST">
         @csrf
 
         <x-forms.text-input type='text' name='name' value="{{ old('name') }}" :isError="$errors->has('name')" placeholder='Имя'
@@ -45,7 +45,7 @@
         <x-slot:socialAuth>
             <ul class="space-y-3 mt-5">
                 <li>
-                    <a href="#"
+                    <a href="{{ route('socialite.github') }}"
                         class="relative flex items-center h-14 px-12 rounded-lg border border-[#A07BF0] bg-white/20 hover:bg-white/20 active:bg-white/10 active:translate-y-0.5">
                         <svg class="shrink-0 absolute left-4 w-5 sm:w-6 h-5 sm:h-6" xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor" viewBox="0 0 20 20">
@@ -61,7 +61,7 @@
 
         <x-slot:buttons>
             <div class="text-xxs md:text-xs">Есть аккаунт?
-                <a href="{{ route('auth.login') }}"
+                <a href="{{ route('login') }}"
                     class="text-white hover:text-white/70 font-bold underline underline-offset-4">Войти</a>
             </div>
         </x-slot:buttons>
