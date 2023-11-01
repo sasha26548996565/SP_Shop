@@ -32,16 +32,15 @@ Route::middleware('guest')->group(function () {
         Route::get('/{token}', 'renderPage')->name('password.reset');
         Route::post('/', 'handle')->name('reset.handle');
     });
-
-    Route::name('socialite.')->prefix('auth/socialite')->group(function () {
-        Route::controller(GithubController::class)->name('github')->prefix('github')->group(function () {
-            Route::get('/', 'github');
-            Route::get('/callback', 'githubCallback')->name('.callback');
-        });
-    });
-
 });
 
 Route::middleware('auth')->group(function () {
     Route::delete('/logout', LogoutController::class)->name('logout');
+});
+
+Route::name('socialite.')->prefix('auth/socialite')->group(function () {
+    Route::controller(GithubController::class)->name('github')->prefix('github')->group(function () {
+        Route::get('/', 'github');
+        Route::get('/callback', 'githubCallback')->name('.callback');
+    });
 });
