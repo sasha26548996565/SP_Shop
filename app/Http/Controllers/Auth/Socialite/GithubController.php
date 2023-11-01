@@ -26,7 +26,7 @@ class GithubController extends Controller
         $user = User::updateOrCreate([
             'github_id' => $githubUser->id,
         ], [
-            'name' => $githubUser->nickname,
+            'name' => $githubUser->nickname ?? $githubUser->email,
             'email' => $githubUser->email,
             'password' => Hash::make(Str::random(8))
         ]);
