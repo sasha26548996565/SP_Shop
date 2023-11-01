@@ -11,7 +11,14 @@
 </head>
 
 <body>
+    @auth
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            @method('DELETE')
 
+            <input type="submit" value="Выйти" style="cursor: pointer;">
+        </form>
+    @endauth
 </body>
 
 </html>

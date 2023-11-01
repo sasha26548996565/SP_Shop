@@ -27,6 +27,9 @@
                         alt="SP Shop">
                 </a>
             </div>
+            @if (session()->has('message'))
+                {{ session()->get('message') }}
+            @endif
             @yield('content')
         </div>
     </main>

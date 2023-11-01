@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignUpRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class SignUpController extends Controller
             'password' => $params['password']
         ]);
 
+        event(new Registered($user));
         Auth::login($user);
-        return to_route('home');
+        return redirect()->intended(route('home'));
     }
 }
