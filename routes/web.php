@@ -15,12 +15,16 @@ Route::get('/', HomeController::class)->name('home');
 Route::middleware('guest')->group(function () {
     Route::controller(SignUpController::class)->prefix('sign-up')->group(function () {
         Route::get('/', 'renderPage')->name('signUp');
-        Route::post('/', 'handle')->name('signUp.handle');
+        Route::post('/', 'handle')
+            ->middleware('throttle:auth')
+            ->name('signUp.handle');
     });
 
     Route::controller(LoginController::class)->prefix('login')->group(function () {
         Route::get('/', 'renderPage')->name('login');
-        Route::post('/', 'handle')->name('login.handle');
+        Route::post('/', 'handle')
+            ->middleware('throttle:auth')
+            ->name('login.handle');
     });
 
     Route::controller(ForgotPasswordController::class)->prefix('forgot-password')->group(function () {

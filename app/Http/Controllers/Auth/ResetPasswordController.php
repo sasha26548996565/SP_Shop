@@ -24,20 +24,23 @@ class ResetPasswordController extends Controller
     public function handle(ResetPasswordRequest $request): RedirectResponse
     {
         $status = Password::reset(
-            $request->validated(),
+            $request->only(['email', 'password', 'password_confirmation', 'token']),
             function (User $user, string $password) {
                 $user->forceFill([
                     'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
-     
+
                 $user->save();
-     
+
                 event(new PasswordReset($user));
             }
         );
-     
-        return $status === Password::PASSWORD_RESET
-                ? redirect()->route('login')->with('message', __($status))
-                : back()->withErrors(['email' => [__($status)]]);
+
+        if ($status !== Password::PASSWORD_RESET) {
+            return back()->withErrors(['email' => [__($status)]]);
+        }
+
+        flash()->info(__($status));
+        return to_route('login');
     }
 }
