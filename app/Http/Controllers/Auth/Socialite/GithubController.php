@@ -24,15 +24,15 @@ class GithubController extends Controller
         $githubUser = Socialite::driver('github')->user();
 
         $user = User::updateOrCreate([
-            'github_id' => $githubUser->id,
+            'github_id' => $githubUser->getId(),
         ], [
-            'name' => $githubUser->nickname ?? $githubUser->email,
-            'email' => $githubUser->email,
+            'name' => $githubUser->getNickName() ?? $githubUser->getEmail(),
+            'email' => $githubUser->getEmail(),
             'password' => Hash::make(Str::random(8))
         ]);
-     
+
         Auth::login($user);
-     
+
         return redirect()
             ->intended(route('home'));
     }

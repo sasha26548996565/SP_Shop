@@ -11,6 +11,11 @@
 </head>
 
 <body>
+    @if ($message = flash()->get())
+        <div class="{{ $message->getClass() }}">
+            {{ $message->getMessage() }}
+        </div>
+    @endif
     @auth
         <form method="POST" action="{{ route('logout') }}">
             @csrf

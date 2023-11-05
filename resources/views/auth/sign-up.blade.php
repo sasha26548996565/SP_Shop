@@ -6,37 +6,48 @@
     <x-forms.auth-forms title='Регистрация' action="{{ route('signUp.handle') }}" method="POST">
         @csrf
 
-        <x-forms.text-input type='text' name='name' value="{{ old('name') }}" :isError="$errors->has('name')" placeholder='Имя'
-            required></x-forms.text-input>
-        @error('name')
-            <x-forms.error>
-                {{ $message }}
-            </x-forms.error>
-        @enderror
+        <x-forms.text-input type='text' name='name' value="{{ old('name') }}"
+            isError="{{ isset($errors) ? $errors->has('name') : false }}" placeholder='Имя' required></x-forms.text-input>
+        @if (isset($errors))
+            @error('name')
+                <x-forms.error>
+                    {{ $message }}
+                </x-forms.error>
+            @enderror
+        @endif
 
-        <x-forms.text-input type='email' name='email' value="{{ old('email') }}" :isError="$errors->has('email')" placeholder='Email'
+        <x-forms.text-input type='email' name='email' value="{{ old('email') }}"
+            isError="{{ isset($errors) ? $errors->has('email') : false }}" placeholder='Email'
             required></x-forms.text-input>
-        @error('email')
-            <x-forms.error>
-                {{ $message }}
-            </x-forms.error>
-        @enderror
+        @if (isset($errors))
+            @error('email')
+                <x-forms.error>
+                    {{ $message }}
+                </x-forms.error>
+            @enderror
+        @endif
 
-        <x-forms.text-input type='password' name='password' :isError="$errors->has('password')" placeholder='Пароль'
+        <x-forms.text-input type='password' name='password'
+            isError="{{ isset($errors) ? $errors->has('password') : false }}" placeholder='Пароль'
             required></x-forms.text-input>
-        @error('password')
-            <x-forms.error>
-                {{ $message }}
-            </x-forms.error>
-        @enderror
+        @if (isset($errors))
+            @error('password')
+                <x-forms.error>
+                    {{ $message }}
+                </x-forms.error>
+            @enderror
+        @endif
 
-        <x-forms.text-input type='password' name='password_confirmation' :isError="$errors->has('password_confirmation')" placeholder='Подтвердите пароль'
+        <x-forms.text-input type='password' name='password_confirmation'
+            isError="{{ isset($errors) ? $errors->has('password_confirmation') : false }}" placeholder='Подтвердите пароль'
             required></x-forms.text-input>
-        @error('password_confirmation')
-            <x-forms.error>
-                {{ $message }}
-            </x-forms.error>
-        @enderror
+        @if (isset($errors))
+            @error('password_confirmation')
+                <x-forms.error>
+                    {{ $message }}
+                </x-forms.error>
+            @enderror
+        @endif
 
         <x-forms.primary-button>
             Зарегистрироваться
