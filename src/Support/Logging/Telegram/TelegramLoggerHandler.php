@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Logging\Telegram;
+namespace Support\Logging\Telegram;
 
 use Monolog\Logger;
 use Monolog\LogRecord;
-use App\Services\Telegram\TelegramBotApi;
+use Services\Telegram\TelegramBotApi;
 use Monolog\Handler\AbstractProcessingHandler;
 
 final class TelegramLoggerHandler extends AbstractProcessingHandler

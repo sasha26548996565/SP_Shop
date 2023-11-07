@@ -27,8 +27,10 @@
                         alt="SP Shop">
                 </a>
             </div>
-            @if (session()->has('message'))
-                {{ session()->get('message') }}
+            @if ($message = flash()->get())
+                <div class="{{ $message->getClass() }}">
+                    {{ $message->getMessage() }}
+                </div>
             @endif
             @yield('content')
         </div>

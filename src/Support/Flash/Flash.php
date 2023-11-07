@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Flash;
+namespace Support\Flash;
 
 use Illuminate\Contracts\Session\Session;
 
@@ -10,9 +10,10 @@ final class Flash
 {
     public const MESSAGE_KEY = 'shop_flash_message';
     public const MESSAGE_CLASS_KEY = 'shop_flash_class';
-    
+
     public function __construct(private Session $session)
-    {}
+    {
+    }
 
     public function get(): ?FlashMessage
     {

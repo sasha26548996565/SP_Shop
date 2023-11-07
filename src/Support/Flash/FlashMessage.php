@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Support\Flash;
+namespace Support\Flash;
 
 final class FlashMessage
 {
     public function __construct(private string $message, private string $class)
-    {}
+    {
+    }
 
     public function getMessage(): string
     {

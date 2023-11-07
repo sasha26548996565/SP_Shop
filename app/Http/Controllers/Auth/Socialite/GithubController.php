@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth\Socialite;
 
-use App\Models\User;
+use Domain\Auth\Models\User;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +16,11 @@ class GithubController extends Controller
 {
     public function github(): RedirectResponse
     {
-        return Socialite::driver('github')->redirect();
+        try {
+            return Socialite::driver('github')->redirect();
+        } catch (\Throwable $error) {
+            throw new \DomainException('Произошла ошибка или драйвер не поддерживается');
+        }
     }
 
     public function githubCallback(): RedirectResponse

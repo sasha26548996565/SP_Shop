@@ -6,7 +6,7 @@ namespace Tests\Feature\App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Auth\LoginController;
 use Tests\TestCase;
-use App\Models\User;
+use Domain\Auth\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Testing\WithFaker;
