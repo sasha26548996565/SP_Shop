@@ -1,8 +1,8 @@
 <?php
 
-use App\Support\Flash\Flash;
+use Support\Flash\Flash;
 
-if (function_exists('') == false) {
+if (function_exists('flash') == false) {
     function flash(): Flash
     {
         return app(Flash::class);

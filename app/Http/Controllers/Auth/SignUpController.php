@@ -6,11 +6,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SignUpRequest;
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
+use Domain\Auth\Contracts\RegisterNewUserContract;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 
 class SignUpController extends Controller
 {
@@ -19,18 +17,13 @@ class SignUpController extends Controller
         return view('auth.sign-up');
     }
 
-    public function handle(SignUpRequest $request): RedirectResponse
+    public function handle(SignUpRequest $request, RegisterNewUserContract $action): RedirectResponse
     {
-        $params = $request->validated();
-
-        $user = User::create([
-            'name' => $params['name'],
-            'email' => $params['email'],
-            'password' => $params['password']
-        ]);
-
-        event(new Registered($user));
-        Auth::login($user);
+        $action(
+            $request->get('name'),
+            $request->get('email'),
+            $request->get('password'),
+        );
         return redirect()->intended(route('home'));
     }
 }

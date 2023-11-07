@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Auth\LoginController;
-use App\Models\User;
+use Database\Factories\UserFactory;
 use Tests\TestCase;
 use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\RequestFactories\LoginRequestFactory;
@@ -33,7 +32,7 @@ class LoginControllerTest extends TestCase
             'email' => 'test@gmail.com',
             'password' => $password
         ];
-        $user = User::factory()->create([
+        $user = UserFactory::new()->create([
             'email' => $parameters['email'],
             'password' => Hash::make($parameters['password'])
         ]);

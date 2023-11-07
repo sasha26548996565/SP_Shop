@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use Domain\Auth\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;

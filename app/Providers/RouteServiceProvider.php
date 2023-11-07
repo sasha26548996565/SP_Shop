@@ -5,15 +5,23 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use Illuminate\Http\Request;
+use App\Routing\AppRegistrar;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Route;
+use Domain\Auth\Routing\AuthRegistrar;
 use Illuminate\Cache\RateLimiting\Limit;
+use App\Contracts\RouteRegistrarContract;
+use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
     public const HOME = '/';
+
+    protected array $registrars = [
+        AppRegistrar::class,
+        AuthRegistrar::class,
+    ];
 
     public function boot(): void
     {
@@ -33,13 +41,22 @@ class RouteServiceProvider extends ServiceProvider
                 });
         });
 
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+        $this->routes(function (Registrar $router) {
+            $this->mapRoutes($router, $this->registrars);
         });
+    }
+
+    protected function mapRoutes(Registrar $router, array $registrars): void
+    {
+        foreach ($registrars as $registrar) {
+            if (!class_exists($registrar) || !is_subclass_of($registrar, RouteRegistrarContract::class)) {
+                throw new \RuntimeException(sprintf(
+                    'Cannot map routes \'%s\', it is not a valid routes class',
+                    $registrar
+                ));
+            }
+
+            (new $registrar)->map($router);
+        }
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\App\Http\Controllers\Auth;
 
 use Tests\TestCase;
-use App\Models\User;
+use Domain\Auth\Models\User;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Notifications\NewUserNotification;
