@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Domain\Auth\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,4 +32,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => "https://ui-avatars.com/api/?background=7843E9&color=fff&name=" . $this->name
+        );
+    }
 }

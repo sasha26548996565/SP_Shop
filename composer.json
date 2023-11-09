@@ -12,7 +12,8 @@
         "laravel/socialite": "^5.10",
         "laravel/telescope": "^4.16",
         "laravel/tinker": "^2.8",
-        "sentry/sentry-laravel": "^3.8"
+        "sentry/sentry-laravel": "^3.8",
+        "symfony/filesystem": "^6.3"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",

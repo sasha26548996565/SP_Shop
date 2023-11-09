@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('thumbnail')->nullable();
             $table->unsignedBigInteger('price');
+            $table->boolean('on_home_page');
+            $table->integer('sorting');
 
             $table->foreignIdFor(Brand::class)
                 ->nullable()
