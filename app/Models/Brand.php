@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Models\Traits\HasThumbnail;
 use App\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,7 @@ class Brand extends Model
 {
     use HasFactory;
     use HasSlug;
+    use HasThumbnail;
 
     protected $fillable = [
         'title',
@@ -33,5 +35,10 @@ class Brand extends Model
         $query->where('on_home_page', true)
             ->orderBy('sorting')
             ->limit(6);
+    }
+
+    protected function thumbnailDirectory(): string
+    {
+        return 'brands';
     }
 }

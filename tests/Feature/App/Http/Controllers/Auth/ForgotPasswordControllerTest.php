@@ -24,7 +24,6 @@ class ForgotPasswordControllerTest extends TestCase
 
     public function test_render_page(): void
     {
-        $this->withoutExceptionHandling();
         $this->get(action([ForgotPasswordController::class, 'renderPage']))
             ->assertOk()
             ->assertViewIs('auth.forgot-password');
@@ -32,8 +31,6 @@ class ForgotPasswordControllerTest extends TestCase
 
     public function test_forgot_password(): void
     {
-        $this->withoutExceptionHandling();
-        Notification::fake();
         $user = UserFactory::new()->create($this->testCredentials());
 
         $this->post(action([ForgotPasswordController::class, 'handle']), $this->testCredentials())
@@ -44,8 +41,6 @@ class ForgotPasswordControllerTest extends TestCase
 
     public function test_fail_forgot_password(): void
     {
-        $this->withoutExceptionHandling();
-        Notification::fake();
         $this->assertDatabaseMissing('users', $this->testCredentials());
 
         $this->post(action([ForgotPasswordController::class, 'handle']), $this->testCredentials())

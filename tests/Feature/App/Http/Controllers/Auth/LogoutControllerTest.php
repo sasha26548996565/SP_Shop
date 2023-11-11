@@ -17,7 +17,6 @@ class LogoutControllerTest extends TestCase
 
     public function test_logout_success(): void
     {
-        $this->withoutExceptionHandling();
         $user = UserFactory::new()->create([
             'email' => 'test@gmail.com'
         ]);
@@ -30,7 +29,6 @@ class LogoutControllerTest extends TestCase
 
     public function test_logout_fail(): void
     {
-        $this->withoutExceptionHandling();
         $this->expectException(AuthenticationException::class);
         $this->expectExceptionMessage('Unauthenticated.');
 

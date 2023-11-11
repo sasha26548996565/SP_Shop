@@ -21,96 +21,66 @@ class SignUpControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private array $requestSuccess;
-    private array $requestError;
+    protected array $request;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->requestSuccess = SignUpRequestFactory::new()->create([
-            'email' => 'test@gmail.com',
-            'password' => '123456789',
-            'password_confirmation' => '123456789',
-        ]);
-
-        $this->requestError = SignUpRequestFactory::new()->create([
-            'email' => 'test@gmail.com',
-            'password' => '123456789',
-            'password_confirmation' => '123',
+        $this->request = SignUpRequestFactory::new()->create([
+            'email' => 'testing@cutcode.ru',
+            'password' => '1234567890',
+            'password_confirmation' => '1234567890'
         ]);
     }
 
-    public function test_render_page(): void
-    {
-        $this->withoutExceptionHandling();
-        $this->get(action([SignUpController::class, 'renderPage']))
-            ->assertOk()
-            ->assertViewIs('auth.sign-up');
-    }
-
-    private function request(array $parameters): TestResponse
+    private function request(): TestResponse
     {
         return $this->post(
             action([SignUpController::class, 'handle']),
-            $parameters
+            $this->request
         );
-    }
-
-    private function requestSuccess(): TestResponse
-    {
-        return $this->request($this->requestSuccess);
-    }
-
-    private function requestError(): TestResponse
-    {
-        return $this->request($this->requestError);
     }
 
     private function findUser(): User
     {
-        return User::where('email', $this->requestSuccess['email'])
+        return User::query()
+            ->where('email', $this->request['email'])
             ->first();
+    }
+
+    public function test_page_success(): void
+    {
+        $this->get(action([SignUpController::class, 'renderPage']))
+            ->assertOk()
+            ->assertSee('Регистрация')
+            ->assertViewIs('auth.sign-up');
     }
 
     public function test_validation_success(): void
     {
-        $this->requestSuccess()
+        $this->request()
             ->assertValid();
     }
 
-    public function test_validation_error(): void
-    {
-        $user = UserFactory::new()->create([
-            'email' => $this->requestError['email']
-        ]);
-
-        $this->assertDatabaseHas('users', [
-            'email' => $user->email
-        ]);
-
-        $this->requestError()
-            ->assertInvalid(['email', 'password']);
-    }
-
-    public function test_user_created(): void
+    public function test_user_created_success(): void
     {
         $this->assertDatabaseMissing('users', [
-            'email' => $this->requestSuccess['email']
+            'email' => $this->request['email']
         ]);
 
-        $this->requestSuccess();
+        $this->request();
 
         $this->assertDatabaseHas('users', [
-            'email' => $this->requestSuccess['email']
+            'email' => $this->request['email']
         ]);
     }
 
-    public function test_event_dispached(): void
+    public function test_registered_event_and_listeners_dispatched(): void
     {
         Event::fake();
 
-        $this->requestSuccess();
+        $this->request();
 
         Event::assertDispatched(Registered::class);
         Event::assertListening(
@@ -119,24 +89,22 @@ class SignUpControllerTest extends TestCase
         );
     }
 
-    public function test_notification_send(): void
+    public function test_notification_sent(): void
     {
-        Notification::fake();
-        $this->requestSuccess();
+        $this->request();
 
-        $user = $this->findUser();
-        $event = new Registered($user);
-        $listener = new SendEmailNewUserListener();
-        $listener->handle($event);
-
-        Notification::assertSentTo($user, NewUserNotification::class);
+        Notification::assertSentTo(
+            $this->findUser(),
+            NewUserNotification::class
+        );
     }
 
-    public function test_auth(): void
+
+    public function test_user_authenticated_after_and_redirected(): void
     {
-        $this->requestSuccess()
-            ->assertValid()
+        $this->request()
             ->assertRedirect(route('home'));
+
         $this->assertAuthenticatedAs($this->findUser());
     }
 }

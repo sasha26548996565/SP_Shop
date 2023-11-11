@@ -24,7 +24,6 @@ class ResetPasswordControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutExceptionHandling();
 
         $this->user = UserFactory::new()->create([
             'email' => 'test@gmail.com'
