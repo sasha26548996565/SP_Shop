@@ -26,7 +26,7 @@ class SignUpRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'email' => str(request('email'))
+            'email' => str($this->input('email'))
                 ->squish()
                 ->lower()
                 ->value()
