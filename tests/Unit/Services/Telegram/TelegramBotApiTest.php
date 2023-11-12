@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Services\Telegram\TelegramBotApi;
 use Services\Telegram\TelegramBotApiContract;
 
-class TelegramBotApiTest extends TestCase
+final class TelegramBotApiTest extends TestCase
 {
     public function test_message_send_success(): void
     {

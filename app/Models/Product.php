@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Traits\HasThumbnail;
-use App\Traits\Models\HasSlug;
+use Support\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Support\Casts\PriceCast;
 
 class Product extends Model
 {
@@ -25,6 +26,10 @@ class Product extends Model
         'brand_id',
         'on_home_page',
         'sorting',
+    ];
+
+    protected $casts = [
+        'price' => PriceCast::class
     ];
 
     public function brand(): BelongsTo

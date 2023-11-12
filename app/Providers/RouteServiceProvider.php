@@ -7,7 +7,7 @@ namespace App\Providers;
 use Illuminate\Http\Request;
 use App\Routing\AppRegistrar;
 use Illuminate\Http\Response;
-use Domain\Auth\Routing\AuthRegistrar;
+use App\Routing\AuthRegistrar;
 use Illuminate\Cache\RateLimiting\Limit;
 use App\Contracts\RouteRegistrarContract;
 use Illuminate\Contracts\Routing\Registrar;

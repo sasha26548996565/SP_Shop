@@ -8,10 +8,9 @@ use App\Http\Controllers\Auth\LogoutController;
 use Database\Factories\UserFactory;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class LogoutControllerTest extends TestCase
+final class LogoutControllerTest extends TestCase
 {
     use RefreshDatabase;
 

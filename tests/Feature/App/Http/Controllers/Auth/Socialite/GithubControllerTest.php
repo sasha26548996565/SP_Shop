@@ -6,7 +6,6 @@ namespace Tests\Feature\App\Http\Controllers\Auth\Socialite;
 
 use App\Http\Controllers\Auth\Socialite\GithubController;
 use Database\Factories\UserFactory;
-use DomainException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 use Laravel\Socialite\Contracts\User as SocialiteUser;
@@ -14,7 +13,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Mockery\MockInterface;
 use Tests\TestCase;
 
-class GithubControllerTest extends TestCase
+final class GithubControllerTest extends TestCase
 {
     use RefreshDatabase;
     

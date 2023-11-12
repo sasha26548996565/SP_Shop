@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Product;
+use Domain\Catalog\ViewModels\BrandViewModel;
+use Domain\Catalog\ViewModels\CategoryViewModel;
 use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
     public function __invoke(): View
     {
-        $brands = Brand::homePage()
-            ->get();
-        $categories = Category::homePage()
-            ->get();
+        $brands = BrandViewModel::make()
+            ->homePage();
+        $categories = CategoryViewModel::make()
+            ->homePage();
         $products = Product::homePage()
             ->get();
 

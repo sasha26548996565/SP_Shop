@@ -12,12 +12,11 @@ use App\Notifications\NewUserNotification;
 use App\Listeners\SendEmailNewUserListener;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Auth\SignUpController;
-use Database\Factories\UserFactory;
 use Tests\RequestFactories\SignUpRequestFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\TestResponse;
 
-class SignUpControllerTest extends TestCase
+final class SignUpControllerTest extends TestCase
 {
     use RefreshDatabase;
 

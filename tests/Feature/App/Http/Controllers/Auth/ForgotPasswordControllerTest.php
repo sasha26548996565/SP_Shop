@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class ForgotPasswordControllerTest extends TestCase
+final class ForgotPasswordControllerTest extends TestCase
 {
     use RefreshDatabase;
 

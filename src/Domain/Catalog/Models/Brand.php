@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace Domain\Catalog\Models;
 
+use App\Models\Product;
 use App\Models\Traits\HasThumbnail;
-use App\Traits\Models\HasSlug;
+use Domain\Catalog\Collections\BrandCollection;
+use Domain\Catalog\QueryBuilders\BrandQueryBuilder;
+use Support\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,11 +33,14 @@ class Brand extends Model
         return $this->hasMany(Product::class, 'brand_id', 'id');
     }
 
-    public function scopeHomePage(Builder $query): void
+    public function newEloquentBuilder($query): BrandQueryBuilder
     {
-        $query->where('on_home_page', true)
-            ->orderBy('sorting')
-            ->limit(6);
+        return new BrandQueryBuilder($query);
+    }
+
+    public function newCollection(array $models = []): BrandCollection
+    {
+        return new BrandCollection($models);
     }
 
     protected function thumbnailDirectory(): string
