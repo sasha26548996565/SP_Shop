@@ -19,6 +19,5 @@ final class BrandViewModel
             return Brand::homePage()
                 ->get();
         });
-        
     }
 }
