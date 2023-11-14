@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->boolean('on_home_page');
+            $table->integer('sorting');
             $table->timestamps();
         });
     }

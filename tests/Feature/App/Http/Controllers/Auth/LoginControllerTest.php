@@ -12,7 +12,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\RequestFactories\LoginRequestFactory;
 
-class LoginControllerTest extends TestCase
+final class LoginControllerTest extends TestCase
 {
     use RefreshDatabase;
 

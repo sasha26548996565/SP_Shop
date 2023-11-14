@@ -9,12 +9,11 @@ use Tests\TestCase;
 use Domain\Auth\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use Database\Factories\UserFactory;
 
-class ResetPasswordControllerTest extends TestCase
+final class ResetPasswordControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,7 +23,6 @@ class ResetPasswordControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutExceptionHandling();
 
         $this->user = UserFactory::new()->create([
             'email' => 'test@gmail.com'

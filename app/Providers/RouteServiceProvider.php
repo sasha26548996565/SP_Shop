@@ -7,9 +7,10 @@ namespace App\Providers;
 use Illuminate\Http\Request;
 use App\Routing\AppRegistrar;
 use Illuminate\Http\Response;
-use Domain\Auth\Routing\AuthRegistrar;
+use App\Routing\AuthRegistrar;
 use Illuminate\Cache\RateLimiting\Limit;
 use App\Contracts\RouteRegistrarContract;
+use App\Routing\CatalogRegistrar;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -21,6 +22,7 @@ class RouteServiceProvider extends ServiceProvider
     protected array $registrars = [
         AppRegistrar::class,
         AuthRegistrar::class,
+        CatalogRegistrar::class,
     ];
 
     public function boot(): void

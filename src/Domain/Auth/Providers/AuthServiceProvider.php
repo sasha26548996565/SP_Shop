@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Auth\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Brand;
+use Domain\Catalog\Models\Brand;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,10 +11,13 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->fulltext();
+            $table->string('text')->fulltext();
             $table->string('slug')->unique();
             $table->string('thumbnail')->nullable();
             $table->unsignedBigInteger('price');
+            $table->boolean('on_home_page');
+            $table->integer('sorting');
 
             $table->foreignIdFor(Brand::class)
                 ->nullable()
