@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Models\Traits\HasThumbnail;
+use Domain\Catalog\Facades\Sorter;
 use Domain\Catalog\Models\Category;
 use Support\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
@@ -67,14 +68,7 @@ class Product extends Model
 
     public function scopeSorted(Builder $builder): void
     {
-        $builder->when(request('sort'), function (Builder $query) {
-            $column = request()->str('sort');
-            
-            if ($column->contains(['title', 'price'])) {
-                $direction = $column->contains('-') ? 'DESC' : 'ASC';
-                $query->orderBy((string) $column->remove('-'), $direction);
-            }
-        });
+        Sorter::apply($builder);
     }
 
     protected function thumbnailDirectory(): string
