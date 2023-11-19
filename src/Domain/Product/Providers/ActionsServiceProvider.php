@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Catalog\Providers;
+namespace Domain\Product\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

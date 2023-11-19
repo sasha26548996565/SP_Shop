@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Support\Casts;
 
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Database\Factories\ProductFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Support\ValueObjects\Price;

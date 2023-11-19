@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Product;
-use App\Models\Property;
+use Domain\Product\Models\Product;
+use Domain\Product\Models\Property;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::create('product_property', function (Blueprint $table) {
             $table->id();
             $table->string('value');
-            
+
             $table->foreignIdFor(Product::class)
                 ->constrained()
                 ->cascadeOnDelete()
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(Property::class)
                 ->constrained()
                 ->cascadeOnDelete()
-                ->cascadeOnUpdate(); 
+                ->cascadeOnUpdate();
             $table->timestamps();
         });
     }

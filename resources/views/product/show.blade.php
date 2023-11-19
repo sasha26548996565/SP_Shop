@@ -65,11 +65,13 @@
                     <div class="text-pink text-lg md:text-xl font-black">{{ $product->price }}</div>
                 </div>
                 <ul class="sm:max-w-[360px] space-y-2 mt-8">
-                    @foreach ($product->properties as $property)
-                        <li class="flex justify-between text-body">
-                            <strong class="text-white">{{ $property->title }}:</strong> {{ $property->pivot->value }}
-                        </li>
-                    @endforeach
+                    @if ($product->json_properties)
+                        @foreach ($product->json_properties as $property => $value)
+                            <li class="flex justify-between text-body">
+                                <strong class="text-white">{{ $property }}:</strong> {{ $value }}
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
 
                 <!-- Add to cart -->

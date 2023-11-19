@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Models\Product;
 use Database\Factories\BrandFactory;
 use Database\Factories\CategoryFactory;
 use Database\Factories\OptionFactory;
 use Database\Factories\OptionValueFactory;
+use Database\Factories\ProductFactory;
 use Database\Factories\PropertyFactory;
 use Illuminate\Database\Seeder;
 
@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
 
         CategoryFactory::new()->count(15)
             ->has(
-                Product::factory(random_int(1, 3))
+                ProductFactory::new()
+                    ->count(random_int(1, 3))
                     ->hasAttached($optionValues)
                     ->hasAttached($properties, function () {
                         return ['value' => ucfirst(fake()->word())];

@@ -12,10 +12,9 @@ abstract class AbstractFilter implements Stringable
 {
     abstract public function apply(Builder $query): Builder;
 
-    public function __invoke(Builder $query, Closure $next): void
+    public function __invoke(Builder $query, Closure $next): mixed
     {
-        $this->apply($query);
-        $next($query);
+        return $next($this->apply($query));
     }
 
     public function __toString(): string
@@ -30,8 +29,8 @@ abstract class AbstractFilter implements Stringable
         protected string $key,
         protected array $values,
         protected string $viewName,
-    )
-    {}
+    ) {
+    }
 
     public function getTitle(): string
     {

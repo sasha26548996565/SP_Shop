@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use Domain\Product\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 
@@ -17,9 +17,7 @@ class ProductController extends Controller
         $this->addViewed($product->id);
         $viewedProducts = $this->getViewed($product->id);
 
-        $options = $product->optionValues->mapToGroups(function ($optionValue) {
-            return [$optionValue->option->title => $optionValue];
-        });
+        $options = $product->optionValues->keyValues();
 
         return view('product.show', compact(
             'product',

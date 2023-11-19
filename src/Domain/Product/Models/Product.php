@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace Domain\Product\Models;
 
+use App\Jobs\JsonPropertiesProductJob;
 use App\Models\Traits\HasThumbnail;
-use Domain\Catalog\Facades\Sorter;
+use Carbon\Carbon;
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
+use Domain\Product\QueryBuilders\ProductQueryBuilder;
 use Support\Traits\Models\HasSlug;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Pipeline\Pipeline;
 use Support\Casts\PriceCast;
 use Laravel\Scout\Searchable;
 use Laravel\Scout\Attributes\SearchUsingFullText;
@@ -36,10 +37,12 @@ class Product extends Model
         'brand_id',
         'on_home_page',
         'sorting',
+        'json_properties',
     ];
 
     protected $casts = [
-        'price' => PriceCast::class
+        'price' => PriceCast::class,
+        'json_properties' => 'array'
     ];
 
     public function brand(): BelongsTo
@@ -63,39 +66,23 @@ class Product extends Model
         return $this->belongsToMany(OptionValue::class, 'option_value_product', 'product_id', 'option_value_id');
     }
 
-    public function scopeHomePage(Builder $query): void
+    protected static function boot(): void
     {
-        $query->where('on_home_page', true)
-            ->orderBy('sorting')
-            ->limit(6);
+        parent::boot();
+
+        static::created(function (Product $product) {
+            JsonPropertiesProductJob::dispatch($product)
+                ->delay(Carbon::now()->addSecond(10));
+        });
     }
 
-    public function scopeFiltered(Builder $query): null
+    public function newEloquentBuilder($query): ProductQueryBuilder
     {
-        return app(Pipeline::class)
-            ->send($query)
-            ->through(filters())
-            ->thenReturn();
-    }
-
-    public function scopeSorted(Builder $builder): void
-    {
-        Sorter::apply($builder);
+        return new ProductQueryBuilder($query);
     }
 
     protected function thumbnailDirectory(): string
     {
         return 'products';
-    }
-
-    #[SearchUsingPrefix(['id'])]
-    #[SearchUsingFullText(['title', 'text'])]
-    public function toSearchableArray(): array
-    {
-        return [
-            'id' => (int) $this->id,
-            'title' => $this->title,
-            'text' => $this->text,
-        ];
     }
 }
