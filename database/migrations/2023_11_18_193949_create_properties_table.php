@@ -8,8 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
+        Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -17,7 +18,7 @@ return new class extends Migration
     public function down(): void
     {
         if (app()->isLocal()) {
-            Schema::dropIfExists('{{ table }}');
+            Schema::dropIfExists('properties');
         }
     }
 };

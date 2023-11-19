@@ -2,7 +2,6 @@
 
 use Domain\Catalog\Filters\FilterManager;
 use Domain\Catalog\Models\Category;
-use Domain\Catalog\Sorters\Sorter;
 use Support\Flash\Flash;
 
 if (function_exists('flash') == false) {
@@ -16,13 +15,6 @@ if (function_exists('filters') == false) {
     function filters(): array
     {
         return app(FilterManager::class)->getFilterItems();
-    }
-}
-
-if (function_exists('sorter') == false) {
-    function sorter(): Sorter
-    {
-        return app(Sorter::class);
     }
 }
 

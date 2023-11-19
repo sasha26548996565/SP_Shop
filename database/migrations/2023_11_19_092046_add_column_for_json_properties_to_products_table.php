@@ -8,16 +8,18 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->json('json_properties')
+                ->nullable();
         });
     }
 
     public function down(): void
     {
         if (app()->isLocal()) {
-            Schema::dropIfExists('{{ table }}');
+            Schema::table('products', function (Blueprint $table) {
+                $table->dropColumn('json_properties');
+            });
         }
     }
 };

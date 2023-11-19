@@ -6,6 +6,7 @@ namespace App\Models;
 
 use App\Models\Traits\HasThumbnail;
 use Domain\Catalog\Facades\Sorter;
+use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
 use Support\Traits\Models\HasSlug;
 use Illuminate\Database\Eloquent\Builder;
@@ -51,6 +52,17 @@ class Product extends Model
         return $this->belongsToMany(Category::class, 'category_product', 'product_id', 'category_id');
     }
 
+    public function properties(): BelongsToMany
+    {
+        return $this->belongsToMany(Property::class, 'product_property', 'product_id', 'property_id')
+            ->withPivot('value');
+    }
+
+    public function optionValues(): BelongsToMany
+    {
+        return $this->belongsToMany(OptionValue::class, 'option_value_product', 'product_id', 'option_value_id');
+    }
+
     public function scopeHomePage(Builder $query): void
     {
         $query->where('on_home_page', true)
@@ -58,7 +70,7 @@ class Product extends Model
             ->limit(6);
     }
 
-    public function scopeFiltered(Builder $query)
+    public function scopeFiltered(Builder $query): null
     {
         return app(Pipeline::class)
             ->send($query)
