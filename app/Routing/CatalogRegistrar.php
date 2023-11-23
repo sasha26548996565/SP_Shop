@@ -13,7 +13,7 @@ final class CatalogRegistrar implements RouteRegistrarContract
 {
     public function map(Registrar $registrar): void
     {
-        Route::middleware('web')->group(function () {
+        Route::middleware(['web', 'catalog.view'])->group(function () {
             Route::get('/catalog/{category:slug?}', CatalogController::class)->name('catalog');
         });
     }
