@@ -75,13 +75,14 @@
                 </ul>
 
                 <!-- Add to cart -->
-                <form class="space-y-8 mt-8">
+                <form class="space-y-8 mt-8" action="{{ route('cart.add', $product) }}" method="POST">
+                    @csrf
                     <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4">
                         @foreach ($options as $option => $optonValues)
                             <div class="flex flex-col gap-2">
                                 <label for="filter-item-1"
                                     class="cursor-pointer text-body text-xxs font-medium">{{ $option }}</label>
-                                <select id="filter-item-1"
+                                <select id="filter-item-1" name="options[]"
                                     class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition">
                                     @foreach ($optonValues as $optionValue)
                                         <option value="{{ $optionValue->id }}" class="text-dark">{{ $optionValue->value }}
@@ -95,7 +96,7 @@
                         <div class="flex items-stretch h-[54px] lg:h-[72px] gap-2">
                             <button type="button"
                                 class="w-12 h-full rounded-lg border border-body/10 hover:bg-card/20 active:bg-card/50 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs text-center font-bold shadow-transparent outline-0 transition">-</button>
-                            <input type="number"
+                            <input type="number" name="quantity"
                                 class="h-full px-2 md:px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs text-center font-bold shadow-transparent outline-0 transition"
                                 min="1" max="999" value="1" placeholder="К-во">
                             <button type="button"

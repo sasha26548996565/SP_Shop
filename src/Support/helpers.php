@@ -1,5 +1,6 @@
 <?php
 
+use Domain\Cart\CartManager;
 use Domain\Catalog\Filters\FilterManager;
 use Domain\Catalog\Models\Category;
 use Support\Flash\Flash;
@@ -8,6 +9,13 @@ if (function_exists('flash') == false) {
     function flash(): Flash
     {
         return app(Flash::class);
+    }
+}
+
+if (function_exists('cart') == false) {
+    function cart(): CartManager
+    {
+        return app(CartManager::class);
     }
 }
 

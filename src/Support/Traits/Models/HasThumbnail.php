@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Traits;
+namespace Support\Traits\Models;
 
 use Illuminate\Support\Facades\File;
 
 trait HasThumbnail
 {
     abstract protected function thumbnailDirectory(): string;
-    
+
     public function makeThumbnail(string $size, string $method = 'resize'): string
     {
         return route('thumbnail', [
