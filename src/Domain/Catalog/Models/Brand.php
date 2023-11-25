@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Catalog\Models;
 
 use Domain\Product\Models\Product;
-use App\Models\Traits\HasThumbnail;
+use Support\Traits\Models\HasThumbnail;
 use Domain\Catalog\Collections\BrandCollection;
 use Domain\Catalog\QueryBuilders\BrandQueryBuilder;
 use Support\Traits\Models\HasSlug;

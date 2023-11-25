@@ -5,21 +5,18 @@ declare(strict_types=1);
 namespace Domain\Product\Models;
 
 use App\Jobs\JsonPropertiesProductJob;
-use App\Models\Traits\HasThumbnail;
+use Support\Traits\Models\HasThumbnail;
 use Carbon\Carbon;
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
 use Domain\Product\QueryBuilders\ProductQueryBuilder;
 use Support\Traits\Models\HasSlug;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Support\Casts\PriceCast;
 use Laravel\Scout\Searchable;
-use Laravel\Scout\Attributes\SearchUsingFullText;
-use Laravel\Scout\Attributes\SearchUsingPrefix;
 
 class Product extends Model
 {

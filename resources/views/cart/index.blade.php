@@ -1,0 +1,53 @@
+@extends('layouts.app')
+
+@section('title', 'Корзина покупок')
+
+@section('content')
+
+    <!-- Breadcrumbs -->
+    <ul class="breadcrumbs flex flex-wrap gap-y-1 gap-x-4 mb-6">
+        <li><a href="{{ route('home') }}" class="text-body hover:text-pink text-xs">Главная</a></li>
+        <li><span class="text-body text-xs">Корзина покупок</span></li>
+    </ul>
+
+    <section>
+        <!-- Section heading -->
+        <h1 class="mb-8 text-lg lg:text-[42px] font-black">Корзина покупок</h1>
+
+        @if ($items->isEmpty())
+            <div class="py-3 px-6 rounded-lg bg-pink text-white">Корзина пуста</div>
+        @else
+            <div class="py-3 px-6 rounded-lg bg-pink text-white">Таблицу можно пролистать вправо →</div>
+
+            <!-- Adaptive table -->
+            <div class="overflow-auto">
+                <table class="min-w-full border-spacing-y-4 text-white text-sm text-left" style="border-collapse: separate">
+                    <thead class="text-xs uppercase">
+                        <th scope="col" class="py-3 px-6">Товар</th>
+                        <th scope="col" class="py-3 px-6">Цена</th>
+                        <th scope="col" class="py-3 px-6">Количество</th>
+                        <th scope="col" class="py-3 px-6">Сумма</th>
+                        <th scope="col" class="py-3 px-6"></th>
+                    </thead>
+                    <tbody>
+                        @each('cart.shared.item', $items, 'item')
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mt-8">
+                <div class="text-[32px] font-black">Итого: {{ cart()->getTotalPrice() }} ₽</div>
+                <form class="pb-3 lg:pb-0" action="{{ route('cart.clear') }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="text-body hover:text-pink font-medium">Очистить корзину</button>
+                </form>
+                <div class="flex flex-col sm:flex-row lg:justify-end gap-4">
+                    <a href="{{ route('catalog') }}" class="btn btn-pink">За покупками</a>
+                    <a href="checkout.html" class="btn btn-purple">Оформить заказ</a>
+                </div>
+            </div>
+        @endif
+
+    </section>
+@endsection
