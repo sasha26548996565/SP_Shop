@@ -137,6 +137,7 @@ class CartManager
 
     private function forgetCache(): void
     {
+        //event on forget cache (event name example: CartCleared)
         Cache::forget($this->getCacheKey($this->getCacheKey()));
     }
 }
