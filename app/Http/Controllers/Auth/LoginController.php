@@ -9,6 +9,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Support\SessionRegenerator;
 
 class LoginController extends Controller
 {
@@ -21,13 +22,14 @@ class LoginController extends Controller
     {
         $params = $request->validated();
 
-        if (Auth::attempt($params)) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('home'));
+        if (Auth::attempt($params) == false) {
+            return back()
+                ->withErrors(['email' => 'Пользователь не найден'])
+                ->onlyInput('email');
         }
 
-        return back()
-            ->withErrors(['email' => 'Пользователь не найден'])
-            ->onlyInput('email');
+        app(SessionRegenerator::class)->run();
+
+        return redirect()->intended(route('home'));
     }
 }

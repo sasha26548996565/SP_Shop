@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Domain\Auth\Contracts\RegisterNewUserContract;
 use Domain\Auth\DTOs\NewUserDTO;
+use Support\SessionRegenerator;
 
 final class RegisterNewUserAction implements RegisterNewUserContract
 {
@@ -22,6 +23,6 @@ final class RegisterNewUserAction implements RegisterNewUserContract
         ]);
 
         event(new Registered($user));
-        Auth::login($user);
+        app(SessionRegenerator::class)->run(fn () => Auth::login($user));
     }
 }
