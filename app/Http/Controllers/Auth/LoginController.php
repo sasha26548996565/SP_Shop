@@ -9,7 +9,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Support\SessionRegenerator;
+use Support\Session\SessionRegenerator;
 
 class LoginController extends Controller
 {

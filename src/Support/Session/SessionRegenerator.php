@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Support;
+namespace Support\Session;
 
 use App\Events\AfterSessionRegistered;
 use Closure;
 
-class SessionRegenerator
+class SessionRegenerator implements SessionRegeneratorContract
 {
-    public function run(?Closure $callback): void
+    public function run(Closure $callback = null): void
     {
         $oldSessionId = request()->session()->getId();
 

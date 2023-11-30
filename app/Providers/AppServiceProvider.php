@@ -12,6 +12,8 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\ServiceProvider;
 use Services\Telegram\TelegramBotApi;
 use Services\Telegram\TelegramBotApiContract;
+use Support\Session\SessionRegenerator;
+use Support\Session\SessionRegeneratorContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict(app()->isLocal());
 
         $this->app->bind(TelegramBotApiContract::class, TelegramBotApi::class);
+        $this->app->bind(SessionRegeneratorContract::class, SessionRegenerator::class);
 
         if (app()->isProduction()) {
             DB::listen(static function (QueryExecuted $query) {

@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Support\SessionRegenerator;
+use Support\Session\SessionRegenerator;
 
 class LogoutController extends Controller
 {

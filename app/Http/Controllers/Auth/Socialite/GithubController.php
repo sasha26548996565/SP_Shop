@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Auth\Socialite;
 
 use Illuminate\Support\Str;
 use Domain\Auth\Models\User;
-use Support\SessionRegenerator;
+use Support\Session\SessionRegenerator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
