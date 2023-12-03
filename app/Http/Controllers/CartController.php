@@ -39,8 +39,6 @@ class CartController extends Controller
             (int) request('quantity', 1)
         );
 
-        dd(request('quantity'));
-
         flash()->info('Количество товара изменено');
 
         return to_route('cart');
