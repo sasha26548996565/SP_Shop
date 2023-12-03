@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Domain\Cart;
 
-use Carbon\Carbon;
 use Domain\Cart\Contracts\CartIdentityStorageContract;
 use Domain\Cart\Models\Cart;
 use Domain\Cart\Models\CartItem;
+use Domain\Cart\StorageIdenties\FakeIdentityStorage;
 use Domain\Product\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -20,6 +20,17 @@ class CartManager
     public function __construct(
         private CartIdentityStorageContract $identityStorage
     ) {
+    }
+
+    public static function fake(): void
+    {
+        app()->bind(CartIdentityStorageContract::class, FakeIdentityStorage::class);
+    }
+
+    public function updateIdentityStorage(string $oldId, string $currentId): void
+    {
+        Cart::where('storage_id', $oldId)
+            ->update($this->generateCartParams($currentId));
     }
 
     public function addItem(Product $product, int $quantity = 1, array $optionValues = []): Cart
@@ -60,7 +71,7 @@ class CartManager
         ];
 
         if (auth()->check()) {
-            array_push($params, auth()->id());
+            $params['user_id'] = auth()->user()->id;
         }
 
         return $params;
@@ -71,6 +82,7 @@ class CartManager
         $cartItem->update([
             'quantity' => $quantity
         ]);
+
         $this->forgetCache();
     }
 
@@ -82,7 +94,10 @@ class CartManager
 
     public function clear(): void
     {
-        $this->getCart()?->delete();
+        if ($this->getCart()) {
+            $this->getCart()->delete();
+        }
+
         $this->forgetCache();
     }
 

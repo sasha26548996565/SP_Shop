@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth\Socialite;
 
-use Domain\Auth\Models\User;
 use Illuminate\Support\Str;
+use Domain\Auth\Models\User;
+use Support\Session\SessionRegenerator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,7 @@ class GithubController extends Controller
             'password' => Hash::make(Str::random(8))
         ]);
 
-        Auth::login($user);
+        app(SessionRegenerator::class)->run(fn () => Auth::login($user));
 
         return redirect()
             ->intended(route('home'));

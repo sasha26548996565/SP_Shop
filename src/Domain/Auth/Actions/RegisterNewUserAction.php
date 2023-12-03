@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Domain\Auth\Contracts\RegisterNewUserContract;
 use Domain\Auth\DTOs\NewUserDTO;
+use Support\Session\FakeSessionRegenerator;
+use Support\Session\SessionRegenerator;
+use Support\Session\SessionRegeneratorContract;
 
 final class RegisterNewUserAction implements RegisterNewUserContract
 {
+    public static function fake(): void
+    {
+        app()->bind(SessionRegeneratorContract::class, FakeSessionRegenerator::class);
+    }
+
     public function __invoke(NewUserDTO $params): void
     {
         $user = User::create([
@@ -22,6 +30,7 @@ final class RegisterNewUserAction implements RegisterNewUserContract
         ]);
 
         event(new Registered($user));
+        //app(SessionRegenerator::class)->run(fn () => Auth::login($user));
         Auth::login($user);
     }
 }
