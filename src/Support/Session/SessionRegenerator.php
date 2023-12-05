@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Support\Session;
 
-use App\Events\AfterSessionRegistered;
 use Closure;
+use Domain\Order\Events\AfterSessionRegistered;
 
 class SessionRegenerator implements SessionRegeneratorContract
 {

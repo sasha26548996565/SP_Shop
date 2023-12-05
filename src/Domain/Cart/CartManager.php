@@ -143,6 +143,13 @@ class CartManager
         );
     }
 
+    public function getRawTotalPrice(): int
+    {
+        return $this->getCartItems()->sum(function ($cartItem) {
+            return $cartItem->price->getRawValue() * $cartItem->quantity;
+        });
+    }
+
     private function getCacheKey(): string
     {
         return str('cart_' . $this->identityStorage->getId())
@@ -153,6 +160,6 @@ class CartManager
     private function forgetCache(): void
     {
         //event on forget cache (event name example: CartCleared)
-        Cache::forget($this->getCacheKey($this->getCacheKey()));
+        Cache::forget($this->getCacheKey());
     }
 }

@@ -16,6 +16,9 @@ final class OrderRegistrar implements RouteRegistrarContract
         Route::middleware('web')->group(function () {
             Route::controller(OrderController::class)->prefix('order')->name('order')->group(function () {
                 Route::get('/', 'index');
+
+                Route::post('/', 'handle')
+                    ->name('.handle');
             });
         });
     }

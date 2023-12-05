@@ -14,7 +14,9 @@
         <!-- Section heading -->
         <h1 class="mb-8 text-lg lg:text-[42px] font-black">Оформление заказа</h1>
 
-        <form class="grid xl:grid-cols-3 items-start gap-6 2xl:gap-8 mt-12">
+        <form action="{{ route('order.handle') }}" method="POST"
+            class="grid xl:grid-cols-3 items-start gap-6 2xl:gap-8 mt-12">
+            @csrf
 
             <!-- Contact information -->
             <div class="p-6 2xl:p-8 rounded-[20px] bg-card">

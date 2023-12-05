@@ -19,6 +19,7 @@ return new class extends Migration
                 ->default(OrderStatuses::New->value);
 
             $table->foreignIdFor(User::class)
+                ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
