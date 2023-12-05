@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Events\AfterSessionRegistered;
 use App\Listeners\SendEmailNewUserListener;
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
 use Domain\Catalog\Observers\BrandObserver;
 use Domain\Catalog\Observers\CategoryObserver;
+use Domain\Order\Events\AfterSessionRegistered;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
