@@ -16,6 +16,7 @@ final class NewOrderAction implements NewOrderContract
     public function __invoke(OrderDTO $orderParams, CustomerDTO $customerParams, bool $createAccount): Order
     {
         $totalPrice = cart()->getRawTotalPrice();
+
         if ($createAccount) {
             $registerAction = app(RegisterNewUserContract::class);
 
