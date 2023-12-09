@@ -51,12 +51,12 @@ class Order extends Model
         return $this->belongsTo(PaymentMethod::class, 'payment_method_id', 'id');
     }
 
-    public function orderCustomer(): HasOne
+    public function customer(): HasOne
     {
         return $this->hasOne(OrderCustomer::class, 'order_id', 'id');
     }
 
-    public function orderItems(): HasMany
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }

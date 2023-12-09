@@ -21,7 +21,7 @@ final class RegisterNewUserAction implements RegisterNewUserContract
         app()->bind(SessionRegeneratorContract::class, FakeSessionRegenerator::class);
     }
 
-    public function __invoke(NewUserDTO $params): void
+    public function __invoke(NewUserDTO $params): User
     {
         $user = User::create([
             'name' => $params->name,
@@ -32,5 +32,7 @@ final class RegisterNewUserAction implements RegisterNewUserContract
         event(new Registered($user));
         //app(SessionRegenerator::class)->run(fn () => Auth::login($user));
         Auth::login($user);
+
+        return $user;
     }
 }

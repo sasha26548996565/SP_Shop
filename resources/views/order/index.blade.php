@@ -14,7 +14,9 @@
         <!-- Section heading -->
         <h1 class="mb-8 text-lg lg:text-[42px] font-black">Оформление заказа</h1>
 
-        <form class="grid xl:grid-cols-3 items-start gap-6 2xl:gap-8 mt-12">
+        <form action="{{ route('order.handle') }}" method="POST"
+            class="grid xl:grid-cols-3 items-start gap-6 2xl:gap-8 mt-12">
+            @csrf
 
             <!-- Contact information -->
             <div class="p-6 2xl:p-8 rounded-[20px] bg-card">
@@ -74,7 +76,7 @@
                                 x-transition:leave="ease-in duration-150" x-transition:leave-start="opacity-100"
                                 x-transition:leave-end="opacity-0" class="mt-4 space-y-3">
 
-                                <x-forms.text-input type="password" name="password" placeholder="Придумайте пароль" required
+                                <x-forms.text-input type="password" name="password" placeholder="Придумайте пароль"
                                     :isError="$errors->has('password')"></x-forms.text-input>
 
                                 @error('password')
@@ -84,7 +86,7 @@
                                 @enderror
 
                                 <x-forms.text-input type="password" name="password_confirmation" placeholder="Повторите пароль"
-                                    required :isError="$errors->has('password_confirmation')"></x-forms.text-input>
+                                    :isError="$errors->has('password_confirmation')"></x-forms.text-input>
 
                                 @error('password_confirmation')
                                     <x-forms.error>
