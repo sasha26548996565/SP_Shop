@@ -1,7 +1,5 @@
 @extends('layouts.auth')
 
-@section('title', 'Восстановить пароль')
-
 @section('content')
     <x-forms.auth-forms title='Восстановить пароль' action="{{ route('reset.handle') }}" method="POST">
         @csrf
