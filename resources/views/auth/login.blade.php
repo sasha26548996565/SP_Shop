@@ -1,7 +1,5 @@
 @extends('layouts.auth')
 
-@section('title', 'Вход в аккаунт')
-
 @section('content')
     <x-forms.auth-forms title='Вход в аккаунт' action="{{ route('login.handle') }}" method="POST">
         @csrf
