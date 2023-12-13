@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Support\Casts\PriceCast;
 use Laravel\Scout\Searchable;
 
@@ -62,6 +63,11 @@ class Product extends Model
     public function optionValues(): BelongsToMany
     {
         return $this->belongsToMany(OptionValue::class, 'option_value_product', 'product_id', 'option_value_id');
+    }
+
+    public function offers(): HasMany
+    {
+        return $this->hasMany(Offer::class, 'product_id', 'id');
     }
 
     protected static function boot(): void

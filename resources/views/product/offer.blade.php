@@ -16,15 +16,14 @@
 
         <div class="basis-full lg:basis-2/5 xl:basis-2/4">
             <div class="overflow-hidden h-auto max-h-[620px] lg:h-[480px] xl:h-[620px] rounded-3xl">
-                <img src="{{ $product->makeThumbnail('345x320') }}" class="object-cover w-full h-full"
+                <img src="{{ $offer->makeThumbnail('345x320') }}" class="object-cover w-full h-full"
                     alt="{{ $product->title }}">
             </div>
         </div>
 
         <div class="basis-full lg:basis-3/5 xl:basis-2/4">
             <div class="grow flex flex-col lg:py-8">
-                <h1 class="text-lg md:text-xl xl:text-[42px] font-black">{{ $product->title }} ({{ $product->quantity }})
-                </h1>
+                <h1 class="text-lg md:text-xl xl:text-[42px] font-black">{{ $product->title }} ({{ $offer->quantity }})</h1>
                 <ul class="flex items-center gap-2 mt-4">
                     <li class="text-[#FFC107]">
                         <svg class="w-4 md:w-6 h-4 md:h-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -63,7 +62,7 @@
                     </li>
                 </ul>
                 <div class="flex items-baseline gap-4 mt-4">
-                    <div class="text-pink text-lg md:text-xl font-black">{{ $product->price }}</div>
+                    <div class="text-pink text-lg md:text-xl font-black">{{ $offer->price }}</div>
                 </div>
                 <ul class="sm:max-w-[360px] space-y-2 mt-8">
                     @if ($product->json_properties)
@@ -75,27 +74,29 @@
                     @endif
                 </ul>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4">
-                    @foreach ($options as $option => $optionValues)
-                        <div x-data="{ optionValueIds: @json(request('optionValueIds', [])) }" class="flex flex-col gap-2">
-                            <label for="filter-item-1"
-                                class="cursor-pointer text-body text-xxs font-medium">{{ $option }}</label>
-
-                            <select x-model='optionValueIds' id="filter-item-1" name="optionValueIds[]"
-                                class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                x-on:input.debounce="window.location = '{{ route('product.offer', ['product' => $product]) }}' + '?optionValueIds=' + optionValueIds">
-                                @foreach ($optionValues as $optionValue)
-                                    <option value="{{ $optionValue->id }}" class="text-dark">
-                                        {{ $optionValue->value }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    @endforeach
-                </div>
-
                 <!-- Add to cart -->
                 <form class="space-y-8 mt-8" action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
+                    <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4">
+                        @foreach ($options as $option => $optionValues)
+                            <div x-data="{ url: '{{ route('product.offer', [
+                                'product' => $product,
+                                'optionValueIds' => request('optionValueIds'),
+                            ]) }}' }" class="flex flex-col gap-2">
+                                <label for="filter-item-1"
+                                    class="cursor-pointer text-body text-xxs font-medium">{{ $option }}</label>
+
+                                <select x-on:change="{ window.location = url }" id="filter-item-1" name="optionValueIds[]"
+                                    class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition">
+                                    @foreach ($optionValues as $optionValue)
+                                        <option value="{{ $optionValue->id }}" @selected(str_contains($optionValue->id, request('optionValueIds')))
+                                            class="text-dark">{{ $optionValue->value }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endforeach
+                    </div>
                     <div class="flex flex-wrap items-center gap-3 xs:gap-4">
                         <div class="flex items-stretch h-[54px] lg:h-[72px] gap-2">
                             <button type="button"
