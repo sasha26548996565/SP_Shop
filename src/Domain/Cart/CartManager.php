@@ -8,7 +8,7 @@ use Domain\Cart\Contracts\CartIdentityStorageContract;
 use Domain\Cart\Models\Cart;
 use Domain\Cart\Models\CartItem;
 use Domain\Cart\StorageIdenties\FakeIdentityStorage;
-use Domain\Product\Models\Product;
+use Domain\Product\Models\Offer;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -33,13 +33,13 @@ class CartManager
             ->update($this->generateCartParams($currentId));
     }
 
-    public function addItem(Product $product, int $quantity = 1, array $optionValues = []): Cart
+    public function addItem(Offer $offer, int $quantity = 1, array $optionValues = []): Cart
     {
         $cart = Cart::updateOrCreate([
             'storage_id' => $this->identityStorage->getId()
         ], $this->generateCartParams($this->identityStorage->getId()));
 
-        $cartItems = $this->setCartItems($cart, $product, $quantity, $optionValues);
+        $cartItems = $this->setCartItems($cart, $offer, $quantity, $optionValues);
         //@TODO check type cartItems and decomposite sync option values
         $cartItems->optionValues()->sync($optionValues);
         $this->forgetCache();
@@ -47,14 +47,14 @@ class CartManager
         return $cart;
     }
 
-    private function setCartItems(Cart $cart, Product $product, int $quantity, array $optionValues) //type hint
+    private function setCartItems(Cart $cart, Offer $offer, int $quantity, array $optionValues) //type hint
     {
         return $cart->cartItems()->updateOrCreate([
             'string_option_values' => $this->convertOptionValuesToString($optionValues),
-            'product_id' => $product->id
+            'offer_id' => $offer->id
         ], [
             'string_option_values' => $this->convertOptionValuesToString($optionValues),
-            'price' => $product->price,
+            'price' => $offer->price,
             'quantity' => DB::raw("quantity + $quantity")
         ]);
     }
@@ -118,8 +118,8 @@ class CartManager
             return collect([]);
         }
 
-        return CartItem::select(['id', 'price', 'quantity', 'product_id', 'cart_id', 'string_option_values'])
-            ->with(['product', 'cart', 'optionValues.option'])
+        return CartItem::select(['id', 'price', 'quantity', 'offer_id', 'cart_id', 'string_option_values'])
+            ->with(['offer', 'cart', 'optionValues.option'])
             ->whereBelongsTo($this->getCart())
             ->get();
     }

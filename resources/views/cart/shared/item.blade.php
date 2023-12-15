@@ -2,12 +2,14 @@
     <td scope="row" class="py-4 px-4 md:px-6 rounded-l-2xl bg-card">
         <div class="flex flex-col lg:flex-row min-w-[200px] gap-2 lg:gap-6">
             <div class="shrink-0 overflow-hidden w-[64px] lg:w-[84px] h-[64px] lg:h-[84px] rounded-2xl">
-                <img src="{{ $item->product->makeThumbnail('345x320') }}" class="object-cover w-full h-full"
-                    alt="{{ $item->product->title }}">
+                <img src="{{ $item->offer->makeThumbnail('345x320') }}" class="object-cover w-full h-full"
+                    alt="{{ $item->offer->product->title }}">
             </div>
             <div class="py-3">
-                <h4 class="text-xs sm:text-sm xl:text-md font-bold"><a href="{{ route('product', $item->product) }}"
-                        class="inline-block text-white hover:text-pink">{{ $item->product->title }}</a>
+                <h4 class="text-xs sm:text-sm xl:text-md font-bold"><a
+                        href="{{ route('product', ['product' => $item->offer->product]) . '?optionValueIds=' . $item->offer->option_value_ids }}"
+                        class="inline-block text-white hover:text-pink">
+                        {{ $item->offer->product->title }}</a>
                 </h4>
                 <ul class="space-y-1 mt-2 text-xs">
                     @forelse ($item->optionValues as $optionValue)
@@ -19,7 +21,7 @@
         </div>
     </td>
     <td class="py-4 px-4 md:px-6 bg-card">
-        <div class="font-medium whitespace-nowrap">{{ $item->product->price }} ₽</div>
+        <div class="font-medium whitespace-nowrap">{{ $item->offer->price }} ₽</div>
     </td>
     <td class="py-4 px-4 md:px-6 bg-card">
         <form class="flex items-stretch h-[56px] gap-2" action="{{ route('cart.quantity', $item) }}" method="POST">

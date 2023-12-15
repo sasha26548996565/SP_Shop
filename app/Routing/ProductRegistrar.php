@@ -16,9 +16,6 @@ final class ProductRegistrar implements RouteRegistrarContract
         Route::middleware('web')->group(function () {
             Route::get('/product/{product:slug}', [ProductController::class, 'show'])
                 ->name('product');
-
-            Route::get('/product/offer/{product:slug}/', [ProductController::class, 'showOffer'])
-                ->name('product.offer');
         });
     }
 }

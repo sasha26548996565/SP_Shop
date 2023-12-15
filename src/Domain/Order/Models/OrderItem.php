@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Order\Models;
 
+use Domain\Product\Models\Offer;
 use Domain\Product\Models\OptionValue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ class OrderItem extends Model
 
     protected $fillable = [
         'order_id',
-        'product_id',
+        'offer_id',
         'price',
         'quantity'
     ];
@@ -26,9 +27,9 @@ class OrderItem extends Model
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
-    public function products(): BelongsTo
+    public function offers(): BelongsTo
     {
-        return $this->belongsTo(Order::class, 'order_id', 'id');
+        return $this->belongsTo(Offer::class, 'offer_id', 'id');
     }
 
     public function optionValues(): BelongsToMany

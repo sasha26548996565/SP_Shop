@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Domain\Cart\Models;
 
+use Domain\Product\Models\Offer;
 use Domain\Product\Models\OptionValue;
-use Domain\Product\Models\Product;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +21,7 @@ class CartItem extends Model
     protected $fillable = [
         'price',
         'quantity',
-        'product_id',
+        'offer_id',
         'cart_id',
         'string_option_values'
     ];
@@ -39,9 +39,9 @@ class CartItem extends Model
         );
     }
 
-    public function product(): BelongsTo
+    public function offer(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
+        return $this->belongsTo(Offer::class, 'offer_id', 'id');
     }
 
     public function cart(): BelongsTo

@@ -16,7 +16,7 @@ final class AssignProducts implements OrderProcessContract
         $order->items()->createMany(
             cart()->getCartItems()->map(function (CartItem $item) {
                 return [
-                    'product_id' => $item->product_id,
+                    'offer_id' => $item->offer_id,
                     'price' => $item->price->getRawValue(),
                     'quantity' => $item->quantity
                 ];

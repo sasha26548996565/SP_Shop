@@ -17,7 +17,7 @@ class OfferFactory extends Factory
     {
         return [
             'product_id' => Product::query()->inRandomOrder()->value('id'),
-            'option_value_ids' => json_decode((string) OptionValue::query()->inRandomOrder()->value('id')),
+            'option_value_ids' => json_encode(OptionValue::query()->inRandomOrder()->value('id')),
             'price' => $this->faker->numberBetween(1000, 100000),
             'quantity' => $this->faker->numberBetween(1, 20),
             'thumbnail' => $this->faker->fixturesImage('offers', 'offers')

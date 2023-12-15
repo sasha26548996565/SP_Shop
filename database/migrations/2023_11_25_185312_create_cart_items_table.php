@@ -1,6 +1,7 @@
 <?php
 
 use Domain\Cart\Models\Cart;
+use Domain\Product\Models\Offer;
 use Domain\Product\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -23,7 +24,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->foreignIdFor(Product::class)
+            $table->foreignIdFor(Offer::class)
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
