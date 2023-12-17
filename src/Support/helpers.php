@@ -3,8 +3,10 @@
 use Domain\Cart\CartManager;
 use Domain\Catalog\Filters\FilterManager;
 use Domain\Catalog\Models\Category;
+use Domain\Product\Models\Offer;
 use Domain\Product\Models\Product;
 use Domain\Wishlist\Actions\AddOffer;
+use Domain\Wishlist\Contracts\CheckContainOfferContract;
 use Support\Flash\Flash;
 
 if (function_exists('flash') == false) {
@@ -44,5 +46,13 @@ if (function_exists('filter_url') == false) {
             ...request()->only(['filters', 'sort']),
             ...$params
         ]);
+    }
+}
+
+if (function_exists('check_contain_in_wishlist') == false) {
+    function check_contain_in_wishlist(Offer $offer): bool
+    {
+        $check = app(CheckContainOfferContract::class);
+        return $check($offer);
     }
 }

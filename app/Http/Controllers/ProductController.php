@@ -23,6 +23,7 @@ class ProductController extends Controller
 
         $offer = null;
         $optionValueIds = json_encode(request('optionValueIds') ?? []);
+
         if (request()->has('optionValueIds')) {
             $offer = Offer::where('product_id', $product->id)
                 ->whereJsonContains('option_value_ids', json_decode(request('optionValueIds')))->first();

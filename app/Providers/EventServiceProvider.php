@@ -10,6 +10,7 @@ use Domain\Catalog\Models\Category;
 use Domain\Catalog\Observers\BrandObserver;
 use Domain\Catalog\Observers\CategoryObserver;
 use Domain\Order\Events\AfterSessionRegistered;
+use Domain\Wishlist\Contracts\UpdateStorageIdContract;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -32,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
                 $event->oldSessionId,
                 $event->currentSessionId
             );
+
+            $updateStorageId = app(UpdateStorageIdContract::class);
+            $updateStorageId($event->oldSessionId, $event->currentSessionId);
         });
     }
 

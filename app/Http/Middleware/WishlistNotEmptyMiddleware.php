@@ -20,6 +20,10 @@ class WishlistNotEmptyMiddleware
             throw new DomainException('У вас нет избранных товаров');
         }
 
+        if ($getWishlists()->offers()->count() <= 0) {
+            throw new DomainException('У вас нет избранных товаров');
+        }
+
         return $next($request);
     }
 }

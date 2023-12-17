@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Tests\Feature\App\Http\Controllers;
 
 use App\Http\Controllers\CartController;
+use Database\Factories\OfferFactory;
+use Database\Factories\OptionFactory;
+use Database\Factories\OptionValueFactory;
 use Database\Factories\ProductFactory;
 use Domain\Cart\CartManager;
-use Domain\Product\Models\Product;
+use Domain\Product\Models\Offer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,19 +18,24 @@ class CartControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private Product $product;
+    private Offer $offer;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         CartManager::fake();
-        $this->product = ProductFactory::new()->create();
+
+        ProductFactory::new()->create();
+        OptionFactory::new()->create();
+        OptionValueFactory::new()->create();
+
+        $this->offer = OfferFactory::new()->create();
     }
 
-    private function getProduct(): Product
+    private function getOffer(): Offer
     {
-        return $this->product;
+        return $this->offer;
     }
 
     public function test_cart_is_empty(): void
@@ -40,7 +48,7 @@ class CartControllerTest extends TestCase
 
     public function test_cart_is_not_empty(): void
     {
-        cart()->addItem($this->getProduct());
+        cart()->addItem($this->getOffer());
 
         $this->get(action([CartController::class, 'index']))
             ->assertOk()
@@ -54,7 +62,7 @@ class CartControllerTest extends TestCase
         $this->assertEquals(0, cart()->getTotalQuantity());
 
         $this->post(
-            action([CartController::class, 'addItem'], $this->getProduct()),
+            action([CartController::class, 'addItem'], $this->getOffer()),
             ['quantity' => $productCount]
         );
 
