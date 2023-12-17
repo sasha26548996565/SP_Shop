@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Domain\Wishlist\Actions;
 
 use Domain\Wishlist\Contracts\StorageIdentityContract;
+use Domain\Wishlist\Models\Wishlist;
 use Illuminate\Support\Facades\Auth;
 
 class AbstractAction
@@ -25,5 +26,11 @@ class AbstractAction
         }
 
         return $params;
+    }
+
+    protected function getWishlist(): ?Wishlist
+    {
+        return Wishlist::where('storage_id', $this->storageIdentity->getId())
+            ->first();
     }
 }

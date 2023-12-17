@@ -7,6 +7,7 @@ namespace Tests\Feature\App\Http\Controllers;
 use App\Http\Controllers\CartController;
 use Database\Factories\ProductFactory;
 use Domain\Cart\CartManager;
+use Domain\Product\Models\Offer;
 use Domain\Product\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -15,7 +16,7 @@ class CartControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private Product $product;
+    private Offer $product;
 
     protected function setUp(): void
     {
@@ -25,7 +26,7 @@ class CartControllerTest extends TestCase
         $this->product = ProductFactory::new()->create();
     }
 
-    private function getProduct(): Product
+    private function getProduct(): Offer
     {
         return $this->product;
     }
