@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Domain\Cart\Models\CartItem;
+use Domain\Product\Models\Offer;
 use Domain\Product\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -18,12 +19,12 @@ class CartController extends Controller
         ]);
     }
 
-    public function addItem(Product $product): RedirectResponse
+    public function addItem(Offer $offer): RedirectResponse
     {
         cart()->addItem(
-            $product,
+            $offer,
             (int) request('quantity', 1),
-            request('options', [])
+            [$offer->option_value_ids]
         );
 
         flash()->info('Товар добавлен в корзину');

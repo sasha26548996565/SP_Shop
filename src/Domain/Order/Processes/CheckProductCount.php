@@ -14,7 +14,7 @@ final class CheckProductCount implements OrderProcessContract
     public function handle(Order $order, Closure $next): Order
     {
         foreach (cart()->getCartItems() as $item) {
-            if ($item->product->quantity < $item->quantity) {
+            if ($item->offer->quantity < $item->quantity) {
                 throw new DomainException('Товар ' . $item->product->title . ', в количестве ' . $item->quantity . ' недоступен!');
             }
         }

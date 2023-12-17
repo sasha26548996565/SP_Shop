@@ -20,7 +20,8 @@ class RefreshCommand extends Command
         }
 
         Storage::deleteDirectory('images/products');
-        Storage::deleteDirectory('images/brands');        
+        Storage::deleteDirectory('images/brands');
+        Storage::deleteDirectory('images/offers');
 
         $this->call('cache:clear');
         $this->call('migrate:fresh', [

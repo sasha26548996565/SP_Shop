@@ -10,11 +10,16 @@ use Domain\Cart\Providers\CartServiceProvider;
 use Domain\Catalog\Providers\CatalogServiceProvider;
 use Domain\Order\Providers\OrderServiceProvider;
 use Domain\Product\Providers\ProductServiceProvider;
+use Domain\Wishlist\Providers\WishlistServiceProvider;
 
 class DomainServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->register(
+            WishlistServiceProvider::class
+        );
+
         $this->app->register(
             OrderServiceProvider::class
         );

@@ -17,7 +17,7 @@ final class CartRegistrar implements RouteRegistrarContract
             Route::name('cart')->prefix('cart')->group(function () {
                 Route::get('/', [CartController::class, 'index']);
 
-                Route::post('/add/{product}', [CartController::class, 'addItem'])
+                Route::post('/add/{offer}', [CartController::class, 'addItem'])
                     ->name('.add');
 
                 Route::post('/quantity/{cartItem}', [CartController::class, 'updateQuantity'])

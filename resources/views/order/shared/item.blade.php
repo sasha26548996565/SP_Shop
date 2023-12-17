@@ -1,7 +1,9 @@
 <tr>
     <td scope="row" class="pb-3 border-b border-body/10">
-        <h4 class="font-bold"><a href="{{ route('product', $item->product) }}"
-                class="inline-block text-white hover:text-pink break-words pr-3">{{ $item->product->title }}</a></h4>
+        <h4 class="font-bold"><a
+                href="{{ route('product', ['product' => $item->offer->product]) . '?optionValueIds=' . $item->offer->option_value_ids }}"
+                class="inline-block text-white hover:text-pink break-words pr-3">{{ $item->offer->product->title }}</a>
+        </h4>
         <ul>
             @foreach ($item->optionValues as $optionValue)
                 <li class="text-body">{{ $optionValue->option->title }}: {{ $optionValue->value }}</li>

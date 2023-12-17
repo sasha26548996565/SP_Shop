@@ -14,7 +14,7 @@ final class DecreaseProductCount implements OrderProcessContract
     public function handle(Order $order, Closure $next): Order
     {
         cart()->getCartItems()->map(function ($item) {
-            $item->product()->update([
+            $item->offer()->update([
                 'quantity' => DB::raw('quantity -' . $item->quantity)
             ]);
         });

@@ -1,7 +1,5 @@
 <?php
 
-use Domain\Order\Models\Order;
-use Domain\Product\Models\Offer;
 use Domain\Product\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -11,22 +9,20 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('order_items', function (Blueprint $table) {
+        Schema::create('offers', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignIdFor(Order::class)
+            $table->foreignIdFor(Product::class)
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->foreignIdFor(Offer::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->json('option_value_ids');
 
             $table->unsignedBigInteger('price');
-
             $table->unsignedBigInteger('quantity');
+
+            $table->string('thumbnail');
 
             $table->timestamps();
         });
@@ -35,7 +31,7 @@ return new class extends Migration
     public function down(): void
     {
         if (app()->isLocal()) {
-            Schema::dropIfExists('order_items');
+            Schema::dropIfExists('offers');
         }
     }
 };
