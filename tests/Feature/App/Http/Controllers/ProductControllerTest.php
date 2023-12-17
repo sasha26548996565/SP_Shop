@@ -19,7 +19,7 @@ class ProductControllerTest extends TestCase
         BrandFactory::new()->create();
         $product = ProductFactory::new()->createOne();
 
-        $this->get(action(ProductController::class, $product))
+        $this->get(action([ProductController::class, 'show'], $product))
             ->assertOk()
             ->assertSee($product->title)
             ->assertSee($product->brand->title);
