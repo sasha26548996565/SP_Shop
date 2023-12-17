@@ -12,7 +12,6 @@
                         {{ $item->offer->product->title }}</a>
                 </h4>
                 <ul class="space-y-1 mt-2 text-xs">
-                    {{ dd($item) }}
                     @forelse ($item->optionValues as $optionValue)
                         <li class="text-body">{{ $optionValue->option->title }}: {{ $optionValue->value }}</li>
                     @empty
