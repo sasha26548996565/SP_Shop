@@ -14,6 +14,7 @@ use App\Routing\CartRegistrar;
 use App\Routing\CatalogRegistrar;
 use App\Routing\OrderRegistrar;
 use App\Routing\ProductRegistrar;
+use App\Routing\WishlistRegistrar;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -23,6 +24,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/';
 
     protected array $registrars = [
+        WishlistRegistrar::class,
         OrderRegistrar::class,
         CartRegistrar::class,
         AppRegistrar::class,

@@ -12,9 +12,10 @@ final class MenuComposer implements ComposerContract
 {
     public function compose(View $view): void
     {
-       $menu = Menu::make()
-            ->add(MenuItem::make(route('home'), 'Главная')) 
-            ->add(MenuItem::make(route('catalog'), 'Каталог'));
+        $menu = Menu::make()
+            ->add(MenuItem::make(route('home'), 'Главная'))
+            ->add(MenuItem::make(route('catalog'), 'Каталог'))
+            ->add(MenuItem::make(route('wishlist'), 'Избранное'));
 
         $view->with('menu', $menu);
     }

@@ -3,6 +3,8 @@
 use Domain\Cart\CartManager;
 use Domain\Catalog\Filters\FilterManager;
 use Domain\Catalog\Models\Category;
+use Domain\Product\Models\Product;
+use Domain\Wishlist\Actions\AddOffer;
 use Support\Flash\Flash;
 
 if (function_exists('flash') == false) {
