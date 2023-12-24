@@ -2,6 +2,7 @@
 
 use Domain\Auth\Models\User;
 use Domain\Order\Enums\OrderStatuses;
+use Domain\Order\Models\Coupon;
 use Domain\Order\Models\DeliveryType;
 use Domain\Order\Models\PaymentMethod;
 use Illuminate\Database\Migrations\Migration;
@@ -30,6 +31,11 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->foreignIdFor(PaymentMethod::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->foreignIdFor(Coupon::class)
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

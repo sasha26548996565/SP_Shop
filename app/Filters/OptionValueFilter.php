@@ -27,7 +27,6 @@ class OptionValueFilter extends AbstractFilter
     {
         return $query->when($this->getRequestValue(null, null), function (Builder $q) {
             $q->whereHas('optionValues', function (Builder $q) {
-                // dd(array_values($this->getRequestValue(null, null)));
                 $q->whereIn('option_values.id', array_values($this->getRequestValue(null, null)));
             });
         });
