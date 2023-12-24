@@ -22,7 +22,8 @@ class Order extends Model
         'delivery_type_id',
         'payment_method_id',
         'total_price',
-        'status'
+        'status',
+        'coupon_id'
     ];
 
     protected $attributes = [
@@ -59,5 +60,10 @@ class Order extends Model
     public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
+    }
+
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class, 'coupon_id', 'id');
     }
 }
