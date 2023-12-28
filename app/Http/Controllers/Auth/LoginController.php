@@ -28,7 +28,9 @@ class LoginController extends Controller
                 ->onlyInput('email');
         }
 
-        app(SessionRegenerator::class)->run();
+        app(SessionRegenerator::class)->run(fn () => auth()->login(
+            auth()->user()
+        ));
 
         return redirect()->intended(route('home'));
     }

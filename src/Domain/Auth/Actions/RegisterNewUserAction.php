@@ -30,8 +30,9 @@ final class RegisterNewUserAction implements RegisterNewUserContract
         ]);
 
         event(new Registered($user));
-        //app(SessionRegenerator::class)->run(fn () => Auth::login($user));
-        Auth::login($user);
+        app(SessionRegeneratorContract::class)->run(fn () => auth()->login(
+            $user
+        ));
 
         return $user;
     }
