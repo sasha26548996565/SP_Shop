@@ -20,11 +20,13 @@ class CatalogServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        app(FilterManager::class)->setFilterItems([
-            new PriceFilter(),
-            new BrandFilter(),
-            new OptionValueFilter(),
-        ]);
+        if (! app()->runningInConsole()) {
+            app(FilterManager::class)->setFilterItems([
+                new PriceFilter(),
+                new BrandFilter(),
+                new OptionValueFilter(),
+            ]);
+        }
 
         $this->app->bind(Sorter::class, function () {
             return new Sorter([
