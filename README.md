@@ -10,3 +10,6 @@
 - php npm install
 - php artisan serve
 - npm run dev
+
+# For run test
+- php artisan test
