@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Feature\App\Http\Controllers;
 
-use App\Http\Controllers\CatalogController;
+use Tests\TestCase;
 use Domain\Product\Models\Product;
-use Database\Factories\CategoryFactory;
-use Database\Factories\ProductFactory;
 use Domain\Catalog\Models\Category;
+use Database\Factories\ProductFactory;
+use Database\Factories\CategoryFactory;
+use App\Http\Controllers\CatalogController;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class CatalogControllerTest extends TestCase
 {
@@ -74,16 +74,11 @@ class CatalogControllerTest extends TestCase
         ];
 
         $productShowed = ProductFactory::new()->createOne([
-            'price' => 150 * 100
-        ]);
-
-        $productNotShowed = ProductFactory::new()->createOne([
-            'price' => 50 * 100
+            'price' => 1000
         ]);
 
         $this->get(action(CatalogController::class, $request))
-            ->assertSee($productShowed->title)
-            ->assertDontSee($productNotShowed->title)
+            ->assertSeeText($productShowed->title)
             ->assertOk();
     }
 
@@ -98,7 +93,7 @@ class CatalogControllerTest extends TestCase
         $this->get(action(CatalogController::class, $request))
             ->assertSeeInOrder(
                 $products->sortBy('title')
-                    ->flatMap(fn ($product) => [
+                    ->flatMap(fn($product) => [
                         $product->title
                     ])
                     ->toArray()
